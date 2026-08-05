@@ -1,24 +1,673 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CalculaTuVela</title>
-    <style>
-        :root { color-scheme: light dark; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 100vh; margin: 0; text-align: center; padding: 1.5rem;
-            color: #1a1a1a; background: #ffffff;
-        }
-        @media (prefers-color-scheme: dark) { body { color: #e8e8e8; background: #121212; } a { color: #7ab8ff; } }
-        a { color: #0b66c3; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalculaTuVela — App para fabricantes de velas · Diego Casas</title>
+<meta name="description" content="CalculaTuVela: app Android para calcular precios, gestionar recetas, inventario y gastos en la fabricación de velas. Proyecto de Diego Casas, desarrollador Android.">
+<meta property="og:title" content="CalculaTuVela — App para fabricantes de velas">
+<meta property="og:description" content="Calcula el precio de tus velas y gestiona tu taller: recetas, inventario y gastos, en una sola app.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light dark;
+    --ground: #FAF3E8;
+    --surface: #FFFDF8;
+    --surface-2: #F4E9D8;
+    --ink: #33261F;
+    --ink-soft: #6E5A4D;
+    --line: #E7D6C0;
+    --terracotta: #C97B67;
+    --terracotta-ink: #AF553D;
+    --flame: #E6952F;
+    --flame-soft: rgba(230, 149, 47, 0.16);
+    --shadow: 24px 32px 60px -32px rgba(80, 50, 30, 0.38);
+    --shadow-sm: 0 2px 10px -4px rgba(80, 50, 30, 0.28);
+
+    --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+    --font-body: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --maxw: 1080px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #1A1411;
+      --surface: #241C17;
+      --surface-2: #2E2318;
+      --ink: #F0E5D6;
+      --ink-soft: #B6A18E;
+      --line: #3A2C22;
+      --terracotta: #DB8E77;
+      --terracotta-ink: #E4A48F;
+      --flame: #F0B45C;
+      --flame-soft: rgba(240, 180, 92, 0.14);
+      --shadow: 24px 32px 70px -30px rgba(0, 0, 0, 0.7);
+      --shadow-sm: 0 2px 12px -4px rgba(0, 0, 0, 0.6);
+    }
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --ground: #FAF3E8; --surface: #FFFDF8; --surface-2: #F4E9D8;
+    --ink: #33261F; --ink-soft: #6E5A4D; --line: #E7D6C0;
+    --terracotta: #C97B67; --terracotta-ink: #AF553D; --flame: #E6952F;
+    --flame-soft: rgba(230, 149, 47, 0.16);
+    --shadow: 24px 32px 60px -32px rgba(80, 50, 30, 0.38);
+    --shadow-sm: 0 2px 10px -4px rgba(80, 50, 30, 0.28);
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #1A1411; --surface: #241C17; --surface-2: #2E2318;
+    --ink: #F0E5D6; --ink-soft: #B6A18E; --line: #3A2C22;
+    --terracotta: #DB8E77; --terracotta-ink: #E4A48F; --flame: #F0B45C;
+    --flame-soft: rgba(240, 180, 92, 0.14);
+    --shadow: 24px 32px 70px -30px rgba(0, 0, 0, 0.7);
+    --shadow-sm: 0 2px 12px -4px rgba(0, 0, 0, 0.6);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--ground);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: var(--terracotta-ink); }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.08; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+  ::selection { background: var(--flame); color: #1A1411; }
+  :focus-visible { outline: 2.5px solid var(--flame); outline-offset: 3px; border-radius: 3px; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terracotta-ink);
+    margin: 0;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--ground) 86%, transparent);
+    backdrop-filter: blur(12px) saturate(1.1);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 1.12rem; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+  .brand .mark { width: 26px; height: 30px; flex-shrink: 0; }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-links a { color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; font-weight: 500; padding: 8px 12px; border-radius: 8px; transition: color .18s, background .18s; }
+  .nav-links a:hover { color: var(--ink); background: var(--surface-2); }
+  .nav-tools { display: flex; align-items: center; gap: 8px; }
+  .toolbtn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 36px; min-width: 36px; padding: 0 10px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink-soft);
+    border-radius: 9px; cursor: pointer; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
+    transition: color .18s, border-color .18s, background .18s;
+  }
+  .toolbtn:hover { color: var(--ink); border-color: var(--terracotta); }
+  .toolbtn svg { width: 17px; height: 17px; display: block; }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; padding: clamp(48px, 8vw, 104px) 0 clamp(56px, 7vw, 96px); overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; top: -140px; right: -120px; width: 520px; height: 520px;
+    background: radial-gradient(circle, var(--flame-soft) 0%, transparent 66%);
+    pointer-events: none; z-index: 0;
+  }
+  .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .hero-copy { max-width: 34ch; }
+  .hero h1 { font-size: clamp(2.6rem, 6vw, 4.3rem); font-weight: 600; margin: 18px 0 0; }
+  .hero h1 .flame-word { position: relative; color: var(--terracotta-ink); font-style: italic; }
+  .hero .lede { font-size: clamp(1.05rem, 1.6vw, 1.22rem); color: var(--ink-soft); margin: 22px 0 0; max-width: 42ch; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; align-items: center; }
+  .badge-soon {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--ink); color: var(--ground);
+    padding: 11px 20px 11px 16px; border-radius: 13px; text-decoration: none;
+    box-shadow: var(--shadow-sm); cursor: default;
+  }
+  .badge-soon .gp { width: 26px; height: 26px; flex-shrink: 0; }
+  .badge-soon .bt { display: flex; flex-direction: column; line-height: 1.1; text-align: left; }
+  .badge-soon .bt small { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.72; font-family: var(--font-mono); }
+  .badge-soon .bt strong { font-size: 1rem; font-weight: 600; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: 13px; text-decoration: none;
+    border: 1px solid var(--line); color: var(--ink); font-weight: 600; font-size: 0.95rem;
+    transition: border-color .18s, background .18s;
+  }
+  .btn-ghost:hover { border-color: var(--terracotta); background: var(--surface); }
+  .btn-ghost svg { width: 18px; height: 18px; }
+  .hero-note { margin-top: 18px; font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
+  .hero-note .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--flame); box-shadow: 0 0 0 3px var(--flame-soft); }
+
+  /* ---------- Phone mockup ---------- */
+  .phone-stage { display: flex; justify-content: center; position: relative; }
+  .phone-stage::after {
+    content: ""; position: absolute; inset: 10% 18% -6% 18%; z-index: -1;
+    background: radial-gradient(ellipse at 50% 40%, var(--flame-soft), transparent 70%);
+    filter: blur(10px);
+  }
+  .phone {
+    width: min(300px, 78vw); aspect-ratio: 300 / 620;
+    background: #100C0A; border-radius: 40px; padding: 11px;
+    box-shadow: var(--shadow); position: relative; flex-shrink: 0;
+  }
+  .phone-screen { width: 100%; height: 100%; background: var(--surface); border-radius: 30px; overflow: hidden; display: flex; flex-direction: column; }
+  .p-status { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px 4px; font-family: var(--font-mono); font-size: 0.66rem; color: var(--ink-soft); }
+  .p-status .sig { display: flex; gap: 4px; align-items: center; }
+  .p-status .sig span { width: 4px; border-radius: 1px; background: var(--ink-soft); }
+  .p-appbar { padding: 6px 18px 14px; }
+  .p-appbar .k { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta-ink); }
+  .p-appbar h4 { font-family: var(--font-display); font-size: 1.15rem; margin: 2px 0 0; color: var(--ink); font-weight: 600; }
+  .p-body { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+  .p-result {
+    background: linear-gradient(135deg, var(--terracotta), var(--terracotta-ink));
+    border-radius: 18px; padding: 16px 18px; color: #FFF7EE;
+  }
+  .p-result .lab { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; }
+  .p-result .big { font-family: var(--font-display); font-size: 2rem; font-weight: 600; margin-top: 2px; font-variant-numeric: tabular-nums; }
+  .p-result .prof { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 0.72rem; background: rgba(255,255,255,0.16); width: fit-content; padding: 3px 9px; border-radius: 20px; }
+  .p-lines { display: flex; flex-direction: column; gap: 2px; }
+  .p-line { display: flex; justify-content: space-between; align-items: center; padding: 8px 4px; border-bottom: 1px solid var(--line); font-size: 0.78rem; }
+  .p-line:last-child { border-bottom: none; }
+  .p-line .nm { color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
+  .p-line .nm i { width: 6px; height: 6px; border-radius: 50%; background: var(--terracotta); font-style: normal; }
+  .p-line .vl { font-family: var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* ---------- Section frame ---------- */
+  section { padding: clamp(56px, 8vw, 104px) 0; }
+  .section-head { max-width: 60ch; margin-bottom: clamp(32px, 4vw, 52px); }
+  .section-head h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); margin-top: 12px; }
+  .section-head p { color: var(--ink-soft); font-size: 1.05rem; margin: 14px 0 0; }
+  .divider-band { border-top: 1px solid var(--line); }
+
+  /* ---------- Features ---------- */
+  #producto { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 18px; }
+  .feat {
+    background: var(--ground); border: 1px solid var(--line); border-radius: 16px; padding: 26px 24px;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .feat:hover { transform: translateY(-4px); border-color: var(--terracotta); box-shadow: var(--shadow-sm); }
+  .feat .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--flame-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .feat .ic svg { width: 24px; height: 24px; stroke: var(--terracotta-ink); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .feat h3 { font-size: 1.2rem; }
+  .feat p { color: var(--ink-soft); font-size: 0.94rem; margin: 8px 0 0; }
+
+  /* ---------- Engineering ---------- */
+  #ingenieria { background: var(--ground); }
+  .eng-top { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
+  @media (max-width: 820px) { .eng-top { grid-template-columns: 1fr; } }
+  .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .metric { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+  .metric .n { font-family: var(--font-display); font-size: 2.2rem; font-weight: 600; color: var(--terracotta-ink); font-variant-numeric: tabular-nums; line-height: 1; }
+  .metric .l { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-soft); margin-top: 8px; letter-spacing: 0.02em; }
+  .eng-points { display: flex; flex-direction: column; gap: 20px; }
+  .ep { display: flex; gap: 14px; }
+  .ep .bullet { flex-shrink: 0; width: 30px; height: 30px; border-radius: 9px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.7rem; color: var(--terracotta-ink); border: 1px solid var(--line); }
+  .ep h3 { font-family: var(--font-body); font-size: 1rem; font-weight: 700; }
+  .ep p { margin: 4px 0 0; color: var(--ink-soft); font-size: 0.92rem; }
+  .stack { margin-top: 44px; }
+  .stack .lab { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 9px; }
+  .chip {
+    font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    padding: 7px 12px; transition: border-color .18s, color .18s;
+  }
+  .chip:hover { border-color: var(--terracotta); color: var(--terracotta-ink); }
+
+  /* ---------- About ---------- */
+  #sobre-mi { background: var(--surface); border-top: 1px solid var(--line); }
+  .about-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-card { background: var(--ground); border: 1px solid var(--line); border-radius: 20px; padding: 30px; box-shadow: var(--shadow-sm); }
+  .avatar { width: 74px; height: 74px; border-radius: 50%; background: linear-gradient(135deg, var(--terracotta), var(--flame)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.9rem; font-weight: 600; color: #FFF7EE; margin-bottom: 18px; }
+  .about-card h3 { font-size: 1.5rem; }
+  .about-card .role { font-family: var(--font-mono); font-size: 0.78rem; color: var(--terracotta-ink); margin: 4px 0 0; letter-spacing: 0.03em; }
+  .about-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .about-links a { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 0.82rem; text-decoration: none; color: var(--ink); border: 1px solid var(--line); background: var(--surface); padding: 9px 14px; border-radius: 10px; transition: border-color .18s, color .18s; }
+  .about-links a:hover { border-color: var(--terracotta); color: var(--terracotta-ink); }
+  .about-links a svg { width: 16px; height: 16px; }
+  .about-copy h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); }
+  .about-copy p { color: var(--ink-soft); font-size: 1.05rem; margin: 18px 0 0; }
+  .card-edu { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .card-edu .lab { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px; }
+  .card-edu ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .card-edu li { font-size: 0.86rem; color: var(--ink); display: flex; gap: 8px; }
+  .card-edu li i { color: var(--terracotta); font-style: normal; flex-shrink: 0; }
+
+  .lab-mono { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 16px; }
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .tl-item { display: grid; grid-template-columns: 132px 1fr; gap: 20px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .tl-item:first-child { border-top: none; padding-top: 0; }
+  .tl-when { font-family: var(--font-mono); font-size: 0.76rem; color: var(--terracotta-ink); padding-top: 2px; }
+  .tl-role { font-weight: 700; font-size: 0.98rem; color: var(--ink); }
+  .tl-co { color: var(--ink-soft); font-size: 0.9rem; margin-top: 1px; }
+  .tl-apps { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tl-apps span { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-soft); background: var(--surface-2); border-radius: 6px; padding: 2px 8px; }
+  .apps-block { margin-top: 40px; }
+  @media (max-width: 560px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } }
+
+  /* ---------- Footer ---------- */
+  footer { background: var(--ground); border-top: 1px solid var(--line); padding: 48px 0 40px; }
+  .foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: flex-start; }
+  .foot-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+  .foot-brand .mark { width: 22px; height: 26px; }
+  .foot-links { display: flex; flex-direction: column; gap: 8px; }
+  .foot-links a { color: var(--ink-soft); text-decoration: none; font-size: 0.9rem; }
+  .foot-links a:hover { color: var(--terracotta-ink); }
+  .foot-bottom { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between; }
+
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-copy { max-width: none; order: 1; }
+    .phone-stage { order: 0; margin-bottom: 8px; }
+    .hero h1 { max-width: 14ch; }
+  }
+
+  /* flame flicker on the wordmark candle */
+  @keyframes flicker { 0%,100% { opacity: 1; transform: scaleY(1); } 45% { opacity: 0.82; transform: scaleY(0.94); } 70% { opacity: 0.95; transform: scaleY(1.03); } }
+  .flame-anim { transform-origin: center bottom; animation: flicker 2.8s ease-in-out infinite; }
+</style>
 </head>
 <body>
-    <h1>CalculaTuVela</h1>
-    <p>Aplicación para fabricantes de velas.</p>
-    <p><a href="./privacy-policy.html">Política de Privacidad</a></p>
+
+<!-- Reusable candle wordmark mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="candle-mark" viewBox="0 0 26 30">
+      <path class="flame-anim" d="M13 1.5c2.2 2.4 3.2 4.2 3.2 6.1a3.2 3.2 0 0 1-6.4 0c0-1.4.6-2.6 1.6-3.9.4 1 .9 1.5 1.6 1.8 0-1.4 0-2.6-.0-4.1z" fill="var(--flame)"/>
+      <rect x="6.5" y="12" width="13" height="16.5" rx="2.4" fill="var(--terracotta)"/>
+      <line x1="13" y1="11" x2="13" y2="13" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="CalculaTuVela — inicio">
+      <svg class="mark" aria-hidden="true"><use href="#candle-mark"/></svg>
+      CalculaTuVela
+    </a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#producto" data-es="El producto" data-en="The product">El producto</a>
+      <a href="#ingenieria" data-es="Ingeniería" data-en="Engineering">Ingeniería</a>
+      <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
+    </nav>
+    <div class="nav-tools">
+      <button class="toolbtn" id="lang-toggle" type="button" aria-label="Cambiar idioma / Switch language">
+        <span id="lang-label">EN</span>
+      </button>
+      <button class="toolbtn" id="theme-toggle" type="button" aria-label="Cambiar tema claro/oscuro">
+        <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow" data-es="App Android · Fabricación de velas" data-en="Android app · Candle making">App Android · Fabricación de velas</p>
+      <h1 data-es-html="Pon precio a tus velas <span class='flame-word'>sin apagar</span> el margen." data-en-html="Price your candles <span class='flame-word'>without burning</span> your margin.">Pon precio a tus velas <span class="flame-word">sin apagar</span> el margen.</h1>
+      <p class="lede" data-es="CalculaTuVela reúne recetas, inventario, gastos y una calculadora de precios en una sola app pensada para talleres artesanales de velas." data-en="CalculaTuVela brings recipes, inventory, expenses and a pricing calculator into one app made for artisan candle workshops.">CalculaTuVela reúne recetas, inventario, gastos y una calculadora de precios en una sola app pensada para talleres artesanales de velas.</p>
+      <div class="cta-row">
+        <span class="badge-soon" role="img" aria-label="Próximamente en Google Play">
+          <svg class="gp" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M8 6.5v35l19-17.5z" fill="#00D2FF"/>
+            <path d="M8 6.5 33 21l6-5.5L11 4.5A3 3 0 0 0 8 6.5z" fill="#00E676"/>
+            <path d="M8 41.5 33 27l6 5.5L11 43.5a3 3 0 0 1-3-2z" fill="#FF3D57"/>
+            <path d="M33 21l6-5.5 5.5 3.2a3 3 0 0 1 0 5.2L39 27l-6-5.5 0 0z" fill="#FFC107"/>
+          </svg>
+          <span class="bt">
+            <small data-es="Próximamente en" data-en="Coming soon to">Próximamente en</small>
+            <strong>Google Play</strong>
+          </span>
+        </span>
+        <a class="btn-ghost" href="#ingenieria">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 8 5 12 9 16"/><polyline points="15 8 19 12 15 16"/></svg>
+          <span data-es="Cómo está construida" data-en="How it's built">Cómo está construida</span>
+        </a>
+      </div>
+      <p class="hero-note"><span class="dot"></span><span data-es="En prueba cerrada · en camino a producción" data-en="In closed testing · heading to production">En prueba cerrada · en camino a producción</span></p>
+    </div>
+
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="p-status">
+            <span>9:41</span>
+            <span class="sig">
+              <span style="height:6px"></span><span style="height:9px"></span><span style="height:12px"></span>
+              <svg width="16" height="10" viewBox="0 0 16 10" fill="var(--ink-soft)" aria-hidden="true"><rect x="0" y="1" width="13" height="8" rx="2" opacity="0.4"/><rect x="1.5" y="2.5" width="9" height="5" rx="1"/><rect x="14" y="3.5" width="1.6" height="3" rx="0.8"/></svg>
+            </span>
+          </div>
+          <div class="p-appbar">
+            <div class="k" data-es="Calculadora" data-en="Calculator">Calculadora</div>
+            <h4 data-es="Precio de tu vela" data-en="Your candle's price">Precio de tu vela</h4>
+          </div>
+          <div class="p-body">
+            <div class="p-result">
+              <div class="lab" data-es="Precio sugerido" data-en="Suggested price">Precio sugerido</div>
+              <div class="big">$178.46</div>
+              <div class="prof">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFF7EE" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+                <span data-es="Ganancia $62.46" data-en="Profit $62.46">Ganancia $62.46</span>
+              </div>
+            </div>
+            <div class="p-lines">
+              <div class="p-line"><span class="nm"><i></i><span data-es="Cera" data-en="Wax">Cera</span></span><span class="vl">$72.00</span></div>
+              <div class="p-line"><span class="nm"><i></i><span data-es="Fragancia (8%)" data-en="Fragrance (8%)">Fragancia (8%)</span></span><span class="vl">$20.00</span></div>
+              <div class="p-line"><span class="nm"><i></i><span data-es="Mecha" data-en="Wick">Mecha</span></span><span class="vl">$5.00</span></div>
+              <div class="p-line"><span class="nm"><i></i><span data-es="Contenedor" data-en="Container">Contenedor</span></span><span class="vl">$25.00</span></div>
+              <div class="p-line"><span class="nm"><i></i><span data-es="Margen 35%" data-en="Margin 35%">Margen 35%</span></span><span class="vl">$46.26</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section id="producto">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-es="El producto" data-en="The product">El producto</p>
+      <h2 data-es="Todo el taller, en cuatro herramientas" data-en="The whole workshop, in four tools">Todo el taller, en cuatro herramientas</h2>
+      <p data-es="Desde la receta hasta el precio final. CalculaTuVela quita la hoja de cálculo del medio y deja el cálculo, el inventario y los gastos en el bolsillo del artesano." data-en="From the recipe to the final price. CalculaTuVela replaces the spreadsheet and keeps calculation, inventory and expenses in the maker's pocket.">Desde la receta hasta el precio final. CalculaTuVela quita la hoja de cálculo del medio y deja el cálculo, el inventario y los gastos en el bolsillo del artesano.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c2 2.2 3 3.9 3 5.6a3 3 0 0 1-6 0C9 6.9 10 5.2 12 3z"/><rect x="7" y="12" width="10" height="9" rx="2"/></svg></div>
+        <h3 data-es="Recetas" data-en="Recipes">Recetas</h3>
+        <p data-es="Guarda cada vela con sus materiales, cantidades e instrucciones. La descripción es opcional; lo esencial, siempre a mano." data-en="Save every candle with its materials, amounts and instructions. Description optional; the essentials always at hand.">Guarda cada vela con sus materiales, cantidades e instrucciones. La descripción es opcional; lo esencial, siempre a mano.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10l-1 12H8L7 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
+        <h3 data-es="Inventario" data-en="Inventory">Inventario</h3>
+        <p data-es="Controla cera, fragancias, mechas y contenedores. Sabe qué tienes y qué te cuesta antes de aceptar el siguiente pedido." data-en="Track wax, fragrances, wicks and containers. Know what you have and what it costs before taking the next order.">Controla cera, fragancias, mechas y contenedores. Sabe qué tienes y qué te cuesta antes de aceptar el siguiente pedido.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/></svg></div>
+        <h3 data-es="Gastos" data-en="Expenses">Gastos</h3>
+        <p data-es="Registra compras y costes indirectos para que el precio final refleje lo que de verdad cuesta hacer cada vela." data-en="Log purchases and indirect costs so the final price reflects what each candle truly costs to make.">Registra compras y costes indirectos para que el precio final refleje lo que de verdad cuesta hacer cada vela.</p>
+      </div>
+      <div class="feat">
+        <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="10" y2="11"/><line x1="13" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="10" y2="15"/><line x1="13" y1="15" x2="16" y2="15"/></svg></div>
+        <h3 data-es="Calculadora de precios" data-en="Pricing calculator">Calculadora de precios</h3>
+        <p data-es="Introduce costes y margen y obtén al instante el precio sugerido y la ganancia por vela. Sin fórmulas ocultas." data-en="Enter costs and margin and instantly get the suggested price and profit per candle. No hidden formulas.">Introduce costes y margen y obtén al instante el precio sugerido y la ganancia por vela. Sin fórmulas ocultas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ENGINEERING -->
+<section id="ingenieria">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-es="Ingeniería" data-en="Engineering">Ingeniería</p>
+      <h2 data-es="Una app pequeña, construida en serio" data-en="A small app, built seriously">Una app pequeña, construida en serio</h2>
+      <p data-es="CalculaTuVela es también mi campo de pruebas de arquitectura Android moderna: modular, testeada y con despliegue automatizado a Google Play." data-en="CalculaTuVela is also my testbed for modern Android architecture: modular, tested and with automated deployment to Google Play.">CalculaTuVela es también mi campo de pruebas de arquitectura Android moderna: modular, testeada y con despliegue automatizado a Google Play.</p>
+    </div>
+
+    <div class="eng-top">
+      <div class="metrics">
+        <div class="metric"><div class="n">17</div><div class="l" data-es="módulos Gradle" data-en="Gradle modules">módulos Gradle</div></div>
+        <div class="metric"><div class="n">249</div><div class="l" data-es="archivos Kotlin" data-en="Kotlin files">archivos Kotlin</div></div>
+        <div class="metric"><div class="n">47</div><div class="l" data-es="clases de test" data-en="test classes">clases de test</div></div>
+        <div class="metric"><div class="n">100%</div><div class="l" data-es="Jetpack Compose" data-en="Jetpack Compose">Jetpack Compose</div></div>
+      </div>
+
+      <div class="eng-points">
+        <div class="ep">
+          <span class="bullet">01</span>
+          <div>
+            <h3 data-es="Clean architecture multi-módulo" data-en="Multi-module clean architecture">Clean architecture multi-módulo</h3>
+            <p data-es="Cada feature se divide en domain / data / ui, con inversión de dependencias vía Hilt. La UI nunca conoce la capa de datos." data-en="Each feature splits into domain / data / ui, with dependency inversion via Hilt. The UI never knows the data layer.">Cada feature se divide en domain / data / ui, con inversión de dependencias vía Hilt. La UI nunca conoce la capa de datos.</p>
+          </div>
+        </div>
+        <div class="ep">
+          <span class="bullet">02</span>
+          <div>
+            <h3 data-es="Estado reactivo con Flow" data-en="Reactive state with Flow">Estado reactivo con Flow</h3>
+            <p data-es="ViewModels con MVVM exponen un StateFlow por pantalla; los repositorios devuelven Flow<Result<T>> y Room persiste localmente." data-en="MVVM ViewModels expose one StateFlow per screen; repositories return Flow<Result<T>> and Room persists locally.">ViewModels con MVVM exponen un StateFlow por pantalla; los repositorios devuelven Flow&lt;Result&lt;T&gt;&gt; y Room persiste localmente.</p>
+          </div>
+        </div>
+        <div class="ep">
+          <span class="bullet">03</span>
+          <div>
+            <h3 data-es="CI/CD y calidad automatizadas" data-en="Automated CI/CD & quality">CI/CD y calidad automatizadas</h3>
+            <p data-es="Cada PR corre tests JVM, tests de UI con Robolectric, Detekt (allRules, cero issues) y orden de dependencias. La release se firma y publica en Play desde GitHub Actions." data-en="Every PR runs JVM tests, Robolectric UI tests, Detekt (allRules, zero issues) and dependency ordering. Releases are signed and published to Play from GitHub Actions.">Cada PR corre tests JVM, tests de UI con Robolectric, Detekt (allRules, cero issues) y orden de dependencias. La release se firma y publica en Play desde GitHub Actions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="lab" data-es="// stack técnico" data-en="// tech stack">// stack técnico</div>
+      <div class="chips">
+        <span class="chip">Kotlin</span>
+        <span class="chip">Jetpack Compose</span>
+        <span class="chip">Material 3</span>
+        <span class="chip">Hilt</span>
+        <span class="chip">Room</span>
+        <span class="chip">Coroutines · Flow</span>
+        <span class="chip">Navigation Compose</span>
+        <span class="chip">MVVM</span>
+        <span class="chip">Gradle KTS</span>
+        <span class="chip">Detekt</span>
+        <span class="chip">JUnit · MockK</span>
+        <span class="chip">Robolectric</span>
+        <span class="chip">GitHub Actions</span>
+        <span class="chip">Firebase Crashlytics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="sobre-mi">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-es="Sobre mí" data-en="About me">Sobre mí</p>
+      <h2 data-es="Detrás de la app: 7+ años de ingeniería móvil" data-en="Behind the app: 7+ years of mobile engineering">Detrás de la app: 7+ años de ingeniería móvil</h2>
+      <p data-es="Soy Diego Casas, ingeniero de software móvil con más de 7 años construyendo apps Android (y algo de iOS) para banca, pagos y e-commerce —de Walmart y HSBC a Zillow, donde trabajo hoy. CalculaTuVela es mi proyecto personal: una app real, publicada de principio a fin, donde controlo cada decisión de producto, arquitectura y despliegue." data-en="I'm Diego Casas, a mobile software engineer with 7+ years building Android (and some iOS) apps for banking, payments and e-commerce —from Walmart and HSBC to Zillow, where I work today. CalculaTuVela is my personal project: a real, end-to-end published app where I own every product, architecture and deployment decision.">Soy Diego Casas, ingeniero de software móvil con más de 7 años construyendo apps Android (y algo de iOS) para banca, pagos y e-commerce —de Walmart y HSBC a Zillow, donde trabajo hoy. CalculaTuVela es mi proyecto personal: una app real, publicada de principio a fin, donde controlo cada decisión de producto, arquitectura y despliegue.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="avatar">DC</div>
+        <h3>Diego Casas</h3>
+        <p class="role" data-es="Ingeniero de Software Móvil · Android" data-en="Mobile Software Engineer · Android">Ingeniero de Software Móvil · Android</p>
+        <div class="about-links">
+          <a href="https://www.linkedin.com/in/diegocasas90/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.65h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.3 0-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/akre8591" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5a10.5 10.5 0 0 0-3.32 20.47c.52.1.71-.23.71-.5v-1.94c-2.9.63-3.52-1.24-3.52-1.24-.47-1.2-1.16-1.52-1.16-1.52-.95-.65.07-.64.07-.64 1.05.08 1.6 1.08 1.6 1.08.93 1.6 2.45 1.14 3.05.87.09-.68.37-1.14.66-1.4-2.32-.26-4.76-1.16-4.76-5.16 0-1.14.4-2.07 1.07-2.8-.11-.26-.47-1.32.1-2.75 0 0 .88-.28 2.87 1.07a9.9 9.9 0 0 1 5.22 0c2-1.35 2.87-1.07 2.87-1.07.57 1.43.21 2.49.1 2.75.67.73 1.07 1.66 1.07 2.8 0 4.01-2.45 4.9-4.78 5.16.38.32.71.95.71 1.92v2.85c0 .28.19.61.72.5A10.5 10.5 0 0 0 12 1.5z"/></svg>
+            GitHub
+          </a>
+          <a href="mailto:casas.diego@outlook.com" title="casas.diego@outlook.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span data-es="Email personal" data-en="Personal email">Email personal</span>
+          </a>
+          <a href="mailto:calculatuvela@gmail.com" title="calculatuvela@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/><circle cx="18.5" cy="5.5" r="3" fill="var(--flame)" stroke="none"/></svg>
+            <span data-es="Email de la app" data-en="App email">Email de la app</span>
+          </a>
+        </div>
+        <div class="card-edu">
+          <div class="lab" data-es="Formación" data-en="Education">Formación</div>
+          <ul>
+            <li><i>—</i><span data-es="Máster en Tecnología e Ing. de Cómputo · UAA" data-en="MSc Technology & Computer Engineering · UAA">Máster en Tecnología e Ing. de Cómputo · UAA</span></li>
+            <li><i>—</i><span data-es="Lic. en Ciencias de la Computación · UAZ" data-en="BSc Computer Science · UAZ">Lic. en Ciencias de la Computación · UAZ</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="about-copy">
+        <p class="lab-mono" data-es="// trayectoria" data-en="// experience">// trayectoria</p>
+        <ul class="timeline">
+          <li class="tl-item">
+            <div class="tl-when"><span data-es="dic 2024 — hoy" data-en="Dec 2024 — now">dic 2024 — hoy</span></div>
+            <div class="tl-what">
+              <div class="tl-role">Zillow</div>
+              <div class="tl-co" data-es="Android Software Engineer · lidera features, hiring y modularización" data-en="Android Software Engineer · leads features, hiring & modularization">Android Software Engineer · lidera features, hiring y modularización</div>
+              <div class="tl-apps"><span>Zillow: Homes For Sale &amp; Rent</span></div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <div class="tl-when">2022 — 2024</div>
+            <div class="tl-what">
+              <div class="tl-role">Western Governors University</div>
+              <div class="tl-co" data-es="Android Software Engineer · Compose, Hilt, MVVM, tests" data-en="Android Software Engineer · Compose, Hilt, MVVM, tests">Android Software Engineer · Compose, Hilt, MVVM, tests</div>
+              <div class="tl-apps"><span>myWGU</span></div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <div class="tl-when">2022 — 2023</div>
+            <div class="tl-what">
+              <div class="tl-role">3Pillar Global · Rover.com</div>
+              <div class="tl-co" data-es="Module Lead (Android) · mentoría y decisiones técnicas" data-en="Module Lead (Android) · mentoring & technical decisions">Module Lead (Android) · mentoría y decisiones técnicas</div>
+              <div class="tl-apps"><span>Rover.com</span></div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <div class="tl-when">2021 — 2022</div>
+            <div class="tl-what">
+              <div class="tl-role">Wizeline</div>
+              <div class="tl-co" data-es="Android Software Engineer · features y arquitectura limpia" data-en="Android Software Engineer · features & clean architecture">Android Software Engineer · features y arquitectura limpia</div>
+              <div class="tl-apps"><span>Walmart</span><span>HSBC</span></div>
+            </div>
+          </li>
+          <li class="tl-item">
+            <div class="tl-when">2019 — 2021</div>
+            <div class="tl-what">
+              <div class="tl-role">Softtek</div>
+              <div class="tl-co" data-es="Mobile Engineer · Android e iOS para banca y pagos" data-en="Mobile Engineer · Android & iOS for banking and payments">Mobile Engineer · Android e iOS para banca y pagos</div>
+              <div class="tl-apps"><span>BBVA Transfer</span><span>MyBambu</span></div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="apps-block">
+          <p class="lab-mono" data-es="// apps publicadas en las que he trabajado" data-en="// shipped apps I've worked on">// apps publicadas en las que he trabajado</p>
+          <div class="chips">
+            <span class="chip">Zillow</span>
+            <span class="chip">Walmart</span>
+            <span class="chip">HSBC</span>
+            <span class="chip">BBVA</span>
+            <span class="chip">Rover.com</span>
+            <span class="chip">MyBambu</span>
+            <span class="chip">myWGU</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <svg class="mark" aria-hidden="true"><use href="#candle-mark"/></svg>
+          CalculaTuVela
+        </div>
+        <p style="color:var(--ink-soft); font-size:0.9rem; margin:12px 0 0; max-width:32ch;" data-es="La calculadora de precios y el gestor de taller para quien fabrica velas." data-en="The pricing calculator and workshop manager for candle makers.">La calculadora de precios y el gestor de taller para quien fabrica velas.</p>
+      </div>
+      <div class="foot-links">
+        <a href="#producto" data-es="El producto" data-en="The product">El producto</a>
+        <a href="#ingenieria" data-es="Ingeniería" data-en="Engineering">Ingeniería</a>
+        <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
+        <a href="./privacy-policy.html" data-es="Política de privacidad" data-en="Privacy policy">Política de privacidad</a>
+        <a href="https://www.linkedin.com/in/diegocasas90/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/akre8591" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Diego Casas · CalculaTuVela</span>
+      <span data-es="Hecho con Kotlin y Jetpack Compose" data-en="Made with Kotlin and Jetpack Compose">Hecho con Kotlin y Jetpack Compose</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* ---------- Theme ---------- */
+  var sun = '<circle cx="12" cy="12" r="4.5"/><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.1" y2="4.9"/>';
+  var moon = '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>';
+  var themeIcon = document.getElementById('theme-icon');
+  function effectiveTheme() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function paintThemeIcon() { themeIcon.innerHTML = effectiveTheme() === 'dark' ? sun : moon; }
+  try { var savedTheme = localStorage.getItem('ctv-theme'); if (savedTheme) root.setAttribute('data-theme', savedTheme); } catch (e) {}
+  paintThemeIcon();
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('ctv-theme', next); } catch (e) {}
+    paintThemeIcon();
+  });
+
+  /* ---------- Language ---------- */
+  var langLabel = document.getElementById('lang-label');
+  function applyLang(lang) {
+    root.setAttribute('lang', lang);
+    document.querySelectorAll('[data-es]').forEach(function (el) {
+      var v = el.getAttribute('data-' + lang);
+      if (v !== null) el.textContent = v;
+    });
+    document.querySelectorAll('[data-es-html]').forEach(function (el) {
+      var v = el.getAttribute('data-' + lang + '-html');
+      if (v !== null) el.innerHTML = v;
+    });
+    langLabel.textContent = lang === 'es' ? 'EN' : 'ES';
+  }
+  var savedLang = 'es';
+  try { savedLang = localStorage.getItem('ctv-lang') || 'es'; } catch (e) {}
+  applyLang(savedLang);
+  document.getElementById('lang-toggle').addEventListener('click', function () {
+    var next = root.getAttribute('lang') === 'es' ? 'en' : 'es';
+    applyLang(next);
+    try { localStorage.setItem('ctv-lang', next); } catch (e) {}
+  });
+
+  /* ---------- Year ---------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
 </body>
 </html>
