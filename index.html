@@ -213,6 +213,23 @@
   .feat h3 { font-size: 1.2rem; }
   .feat p { color: var(--ink-soft); font-size: 0.94rem; margin: 8px 0 0; }
 
+  /* ---------- Gallery ---------- */
+  #galeria { background: var(--ground); }
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 4vw, 44px); max-width: 860px; margin: 0 auto; }
+  .shot-card { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .shot-frame {
+    width: 100%; aspect-ratio: 1080 / 2424; background: #100C0A;
+    border-radius: 34px; padding: 7px; box-shadow: var(--shadow);
+    transition: transform .25s ease;
+  }
+  .shot-card:hover .shot-frame { transform: translateY(-6px); }
+  .shot-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: 28px; display: block; background: #fff; }
+  .shot-cap { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--ink-soft); }
+  .shot-cap b { color: var(--terracotta-ink); font-weight: 500; }
+  @media (max-width: 680px) {
+    .gallery { grid-template-columns: 1fr; max-width: 300px; gap: 40px; }
+  }
+
   /* ---------- Engineering ---------- */
   #ingenieria { background: var(--ground); }
   .eng-top { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: start; }
@@ -394,6 +411,41 @@
         <div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="10" y2="11"/><line x1="13" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="10" y2="15"/><line x1="13" y1="15" x2="16" y2="15"/></svg></div>
         <h3 data-es="Calculadora de precios" data-en="Pricing calculator">Calculadora de precios</h3>
         <p data-es="Introduce costes y margen y obtén al instante el precio sugerido y la ganancia por vela. Sin fórmulas ocultas." data-en="Enter costs and margin and instantly get the suggested price and profit per candle. No hidden formulas.">Introduce costes y margen y obtén al instante el precio sugerido y la ganancia por vela. Sin fórmulas ocultas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galeria">
+  <div class="wrap">
+    <div class="section-head" style="text-align:center; margin-left:auto; margin-right:auto;">
+      <p class="eyebrow" data-es="Míralo por dentro" data-en="See it in action">Míralo por dentro</p>
+    </div>
+    <div class="gallery">
+      <div class="shot-card">
+        <div class="shot-frame">
+          <img src="assets/screens/g-recetas.png" width="828" height="1858" loading="lazy"
+               alt="Lista de recetas de velas en CalculaTuVela"
+               data-es-alt="Lista de recetas de velas en CalculaTuVela" data-en-alt="Candle recipe list in CalculaTuVela">
+        </div>
+        <p class="shot-cap"><b>01</b> · <span data-es="Recetas" data-en="Recipes">Recetas</span></p>
+      </div>
+      <div class="shot-card">
+        <div class="shot-frame">
+          <img src="assets/screens/g-calculo.png" width="828" height="1858" loading="lazy"
+               alt="Calculadora de precio de venta en CalculaTuVela"
+               data-es-alt="Calculadora de precio de venta en CalculaTuVela" data-en-alt="Sale price calculator in CalculaTuVela">
+        </div>
+        <p class="shot-cap"><b>02</b> · <span data-es="Cálculo" data-en="Calculator">Cálculo</span></p>
+      </div>
+      <div class="shot-card">
+        <div class="shot-frame">
+          <img src="assets/screens/g-inventario.png" width="828" height="1858" loading="lazy"
+               alt="Inventario de materiales en CalculaTuVela"
+               data-es-alt="Inventario de materiales en CalculaTuVela" data-en-alt="Materials inventory in CalculaTuVela">
+        </div>
+        <p class="shot-cap"><b>03</b> · <span data-es="Inventario" data-en="Inventory">Inventario</span></p>
       </div>
     </div>
   </div>
