@@ -215,7 +215,7 @@
 
   /* ---------- Gallery ---------- */
   #galeria { background: var(--ground); }
-  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 4vw, 44px); max-width: 860px; margin: 0 auto; }
+  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 3vw, 32px); max-width: 1000px; margin: 0 auto; }
   .shot-card { display: flex; flex-direction: column; align-items: center; gap: 16px; }
   .shot-frame {
     width: 100%; aspect-ratio: 1080 / 2424; background: #100C0A;
@@ -226,9 +226,8 @@
   .shot-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: 28px; display: block; background: #fff; }
   .shot-cap { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; color: var(--ink-soft); }
   .shot-cap b { color: var(--terracotta-ink); font-weight: 500; }
-  @media (max-width: 680px) {
-    .gallery { grid-template-columns: 1fr; max-width: 300px; gap: 40px; }
-  }
+  @media (max-width: 900px) { .gallery { grid-template-columns: repeat(2, 1fr); max-width: 560px; gap: 28px; } }
+  @media (max-width: 520px) { .gallery { grid-template-columns: 1fr; max-width: 300px; gap: 40px; } }
 
   /* ---------- Engineering ---------- */
   #ingenieria { background: var(--ground); }
@@ -446,6 +445,14 @@
                data-es-alt="Inventario de materiales en CalculaTuVela" data-en-alt="Materials inventory in CalculaTuVela">
         </div>
         <p class="shot-cap"><b>03</b> · <span data-es="Inventario" data-en="Inventory">Inventario</span></p>
+      </div>
+      <div class="shot-card">
+        <div class="shot-frame">
+          <img src="assets/screens/g-gastos.png" width="828" height="1858" loading="lazy"
+               alt="Registro de gastos en CalculaTuVela"
+               data-es-alt="Registro de gastos en CalculaTuVela" data-en-alt="Expense tracking in CalculaTuVela">
+        </div>
+        <p class="shot-cap"><b>04</b> · <span data-es="Gastos" data-en="Expenses">Gastos</span></p>
       </div>
     </div>
   </div>
