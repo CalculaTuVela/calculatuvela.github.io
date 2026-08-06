@@ -257,7 +257,7 @@
   .about-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
   @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } }
   .about-card { background: var(--ground); border: 1px solid var(--line); border-radius: 20px; padding: 30px; box-shadow: var(--shadow-sm); }
-  .avatar { width: 74px; height: 74px; border-radius: 50%; background: linear-gradient(135deg, var(--terracotta), var(--flame)); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.9rem; font-weight: 600; color: #FFF7EE; margin-bottom: 18px; }
+  .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: center top; display: block; margin-bottom: 18px; border: 3px solid var(--surface); box-shadow: 0 0 0 2px var(--terracotta), var(--shadow-sm); }
   .about-card h3 { font-size: 1.5rem; }
   .about-card .role { font-family: var(--font-mono); font-size: 0.78rem; color: var(--terracotta-ink); margin: 4px 0 0; letter-spacing: 0.03em; }
   .about-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
@@ -536,7 +536,8 @@
 
     <div class="about-grid">
       <div class="about-card">
-        <div class="avatar">DC</div>
+        <img class="avatar" src="assets/diego.jpg" width="96" height="96"
+             alt="Foto de Diego Casas" data-es-alt="Foto de Diego Casas" data-en-alt="Photo of Diego Casas">
         <h3>Diego Casas</h3>
         <p class="role" data-es="Ingeniero de Software Móvil · Android" data-en="Mobile Software Engineer · Android">Ingeniero de Software Móvil · Android</p>
         <div class="about-links">
