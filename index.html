@@ -246,10 +246,12 @@
   .stack .lab { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 16px; }
   .chips { display: flex; flex-wrap: wrap; gap: 9px; }
   .chip {
+    display: inline-block; text-decoration: none;
     font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink);
     background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
     padding: 7px 12px; transition: border-color .18s, color .18s;
   }
+  a.chip { cursor: pointer; }
   .chip:hover { border-color: var(--terracotta); color: var(--terracotta-ink); }
 
   /* ---------- About ---------- */
@@ -627,13 +629,13 @@
         <div class="apps-block">
           <p class="lab-mono" data-es="// apps publicadas en las que he trabajado" data-en="// shipped apps I've worked on">// apps publicadas en las que he trabajado</p>
           <div class="chips">
-            <span class="chip">Zillow</span>
-            <span class="chip">Walmart</span>
-            <span class="chip">HSBC</span>
-            <span class="chip">BBVA</span>
-            <span class="chip">Rover.com</span>
+            <a class="chip" href="https://play.google.com/store/apps/details?id=com.zillow.android.zillowmap" target="_blank" rel="noopener">Zillow</a>
+            <a class="chip" href="https://play.google.com/store/apps/details?id=com.walmart.mg" target="_blank" rel="noopener">Walmart</a>
+            <a class="chip" href="https://play.google.com/store/apps/details?id=mx.hsbc.hsbcmexico" target="_blank" rel="noopener">HSBC</a>
+            <a class="chip" href="https://play.google.com/store/apps/details?id=com.bancomer.mbanking" target="_blank" rel="noopener">BBVA</a>
+            <a class="chip" href="https://play.google.com/store/apps/details?id=com.rover.android" target="_blank" rel="noopener">Rover.com</a>
             <span class="chip">MyBambu</span>
-            <span class="chip">myWGU</span>
+            <a class="chip" href="https://play.google.com/store/apps/details?id=edu.wgu.students.android" target="_blank" rel="noopener">myWGU</a>
           </div>
         </div>
       </div>
