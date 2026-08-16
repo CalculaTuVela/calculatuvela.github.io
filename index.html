@@ -288,6 +288,42 @@
   .apps-block { margin-top: 40px; }
   @media (max-width: 560px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } }
 
+  /* ---------- Testers CTA ---------- */
+  #testers { background: var(--ground); }
+  .testers-card {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, var(--terracotta), var(--terracotta-ink));
+    border-radius: 24px; padding: clamp(30px, 5vw, 56px); color: #FFF7EE;
+    box-shadow: var(--shadow);
+  }
+  .testers-card::before {
+    content: ""; position: absolute; top: -120px; right: -80px; width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(255,247,238,0.22), transparent 68%);
+    pointer-events: none;
+  }
+  .testers-head { position: relative; z-index: 1; max-width: 52ch; }
+  .testers-head .eyebrow { color: rgba(255,247,238,0.82); }
+  .testers-head h2 { color: #FFF7EE; font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin-top: 12px; }
+  .testers-head p { color: rgba(255,247,238,0.9); font-size: 1.05rem; margin: 14px 0 0; }
+  .tester-steps { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 34px; }
+  @media (max-width: 720px) { .tester-steps { grid-template-columns: 1fr; } }
+  .tstep { background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.24); border-radius: 16px; padding: 22px; }
+  .tstep .num { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; opacity: 0.82; }
+  .tstep h3 { color: #FFF7EE; font-family: var(--font-body); font-size: 1.02rem; font-weight: 700; margin: 8px 0 0; }
+  .tstep p { color: rgba(255,247,238,0.86); font-size: 0.9rem; margin: 6px 0 0; }
+  .tester-cta { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+  .tbtn {
+    display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+    padding: 13px 22px; border-radius: 13px; font-weight: 700; font-size: 0.95rem;
+    transition: transform .18s, background .18s, border-color .18s;
+  }
+  .tbtn svg { width: 18px; height: 18px; }
+  .tbtn-primary { background: #FFF7EE; color: var(--terracotta-ink); box-shadow: var(--shadow-sm); }
+  .tbtn-primary:hover { transform: translateY(-2px); background: #fff; }
+  .tbtn-ghost { border: 1px solid rgba(255,247,238,0.55); color: #FFF7EE; }
+  .tbtn-ghost:hover { border-color: #FFF7EE; background: rgba(255,255,255,0.12); }
+  .tester-note { position: relative; z-index: 1; margin: 20px 0 0; font-family: var(--font-mono); font-size: 0.76rem; color: rgba(255,247,238,0.78); }
+
   /* ---------- Footer ---------- */
   footer { background: var(--ground); border-top: 1px solid var(--line); padding: 48px 0 40px; }
   .foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; align-items: flex-start; }
@@ -331,6 +367,7 @@
     </a>
     <nav class="nav-links" aria-label="Principal">
       <a href="#producto" data-es="El producto" data-en="The product">El producto</a>
+      <a href="#testers" data-es="Sé tester" data-en="Be a tester">Sé tester</a>
       <a href="#ingenieria" data-es="Ingeniería" data-en="Engineering">Ingeniería</a>
       <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
       <a href="./cv.html" data-es="CV" data-en="Resume">CV</a>
@@ -459,6 +496,49 @@
         </div>
         <p class="shot-cap"><b>04</b> · <span data-es="Gastos" data-en="Expenses">Gastos</span></p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTERS -->
+<section id="testers">
+  <div class="wrap">
+    <div class="testers-card">
+      <div class="testers-head">
+        <p class="eyebrow" data-es="Sé de los primeros" data-en="Be one of the first">Sé de los primeros</p>
+        <h2 data-es="Únete al grupo de pruebas de CalculaTuVela" data-en="Join the CalculaTuVela testing group">Únete al grupo de pruebas de CalculaTuVela</h2>
+        <p data-es="Estoy afinando la app antes de su lanzamiento en Google Play y busco personas que hagan velas y quieran probarla. Es gratis, solo necesitas un Android y abrirla de vez en cuando estas semanas. Tu opinión moldea la versión final." data-en="I'm polishing the app before its Google Play launch and I'm looking for candle makers to try it out. It's free — you just need an Android and to open it now and then over the next weeks. Your feedback shapes the final version.">Estoy afinando la app antes de su lanzamiento en Google Play y busco personas que hagan velas y quieran probarla. Es gratis, solo necesitas un Android y abrirla de vez en cuando estas semanas. Tu opinión moldea la versión final.</p>
+      </div>
+
+      <div class="tester-steps">
+        <div class="tstep">
+          <div class="num">01</div>
+          <h3 data-es="Únete al grupo" data-en="Join the group">Únete al grupo</h3>
+          <p data-es="Entra al grupo de testers con tu cuenta de Google y toca «Unirse al grupo»." data-en="Join the testers group with your Google account and tap “Join group”.">Entra al grupo de testers con tu cuenta de Google y toca «Unirse al grupo».</p>
+        </div>
+        <div class="tstep">
+          <div class="num">02</div>
+          <h3 data-es="Hazte tester" data-en="Become a tester">Hazte tester</h3>
+          <p data-es="Abre el enlace de la prueba en tu Android y acepta ser tester." data-en="Open the testing link on your Android and accept becoming a tester.">Abre el enlace de la prueba en tu Android y acepta ser tester.</p>
+        </div>
+        <div class="tstep">
+          <div class="num">03</div>
+          <h3 data-es="Instala y prueba" data-en="Install & try it">Instala y prueba</h3>
+          <p data-es="Descárgala desde Google Play y ábrela varias veces estas semanas." data-en="Download it from Google Play and open it a few times over these weeks.">Descárgala desde Google Play y ábrela varias veces estas semanas.</p>
+        </div>
+      </div>
+
+      <div class="tester-cta">
+        <a class="tbtn tbtn-primary" href="https://groups.google.com/g/testers-calculatuvela" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+          <span data-es="Unirme al grupo de testers" data-en="Join the testers group">Unirme al grupo de testers</span>
+        </a>
+        <a class="tbtn tbtn-ghost" href="https://play.google.com/apps/testing/com.diegocasas.calculatuvela" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+          <span data-es="Ya estoy en el grupo → probar" data-en="Already in the group → test">Ya estoy en el grupo → probar</span>
+        </a>
+      </div>
+      <p class="tester-note" data-es="Primero únete al grupo (paso 1); el enlace de prueba solo funciona una vez que eres miembro." data-en="Join the group first (step 1); the testing link only works once you're a member.">Primero únete al grupo (paso 1); el enlace de prueba solo funciona una vez que eres miembro.</p>
     </div>
   </div>
 </section>
@@ -657,6 +737,7 @@
       </div>
       <div class="foot-links">
         <a href="#producto" data-es="El producto" data-en="The product">El producto</a>
+        <a href="#testers" data-es="Sé tester" data-en="Be a tester">Sé tester</a>
         <a href="#ingenieria" data-es="Ingeniería" data-en="Engineering">Ingeniería</a>
         <a href="#sobre-mi" data-es="Sobre mí" data-en="About">Sobre mí</a>
         <a href="./privacy-policy.html" data-es="Política de privacidad" data-en="Privacy policy">Política de privacidad</a>
