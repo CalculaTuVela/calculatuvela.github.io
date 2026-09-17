@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="es" data-en-lang="en">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-en="Privacy Policy — CalculaTuVela">Política de Privacidad — CalculaTuVela</title>
-<meta name="description" content="Cómo trata la información la app CalculaTuVela: tus datos se quedan en tu dispositivo; solo se recopilan datos técnicos anónimos de fallos y uso." data-en-content="How the CalculaTuVela app handles information: your data stays on your device; only anonymous technical crash and usage data is collected.">
-<link rel="canonical" href="https://calculatuvela.github.io/privacy-policy.html" data-en-href="https://calculatuvela.github.io/en/privacy-policy.html">
+<title>Privacy Policy — CalculaTuVela</title>
+<meta name="description" content="How the CalculaTuVela app handles information: your data stays on your device; only anonymous technical crash and usage data is collected.">
+<link rel="canonical" href="https://calculatuvela.github.io/en/privacy-policy.html">
 <link rel="alternate" hreflang="es" href="https://calculatuvela.github.io/privacy-policy.html">
 <link rel="alternate" hreflang="en" href="https://calculatuvela.github.io/en/privacy-policy.html">
 <link rel="alternate" hreflang="x-default" href="https://calculatuvela.github.io/privacy-policy.html">
 <meta name="theme-color" content="#FAF3E8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1A1411" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="favicon.ico" sizes="32x32">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<script data-es-only>try { if (localStorage.getItem('ctv-lang') === 'en') location.replace('en/' + location.pathname.split('/').pop() + location.hash); } catch (e) {}</script>
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
 <script>try { var t = localStorage.getItem('ctv-theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Hanken+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
-<script src="assets/site.js" defer></script>
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js" defer></script>
 <style>
   .doc { max-width: 760px; padding-top: clamp(40px, 7vw, 72px); padding-bottom: 72px; }
   .doc h1 { font-size: clamp(2.1rem, 5vw, 3rem); }
@@ -47,15 +47,13 @@
 
 <header class="site">
   <div class="wrap nav">
-    <a class="brand" href="./" data-en-href="./" aria-label="CalculaTuVela — inicio" data-en-aria-label="CalculaTuVela — home">
+    <a class="brand" href="./" aria-label="CalculaTuVela — home">
       <svg class="mark" aria-hidden="true"><use href="#candle-mark"/></svg>
       CalculaTuVela
     </a>
     <div class="nav-tools">
-      <a class="toolbtn lang-switch" href="en/privacy-policy.html" hreflang="en" lang="en" aria-label="Read in English"
-         data-en-href="../privacy-policy.html" data-en-hreflang="es" data-en-lang="es" data-en-aria-label="Leer en español"
-         data-es="EN" data-en="ES">EN</a>
-      <button class="toolbtn" id="theme-toggle" type="button" aria-label="Cambiar tema claro/oscuro" data-en-aria-label="Toggle light/dark theme">
+      <a class="toolbtn lang-switch" href="../privacy-policy.html" hreflang="es" lang="es" aria-label="Leer en español">ES</a>
+      <button class="toolbtn" id="theme-toggle" type="button" aria-label="Toggle light/dark theme">
         <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></svg>
       </button>
     </div>
@@ -63,116 +61,9 @@
 </header>
 
 <main class="wrap doc">
-  <div data-es-only>
-    <h1>Política de Privacidad</h1>
-    <p class="meta">Aplicación: <strong>CalculaTuVela</strong> &middot; Última actualización: 17 de julio de 2026</p>
+  
 
-    <p>
-      Esta Política de Privacidad describe cómo la aplicación móvil <strong>CalculaTuVela</strong>
-      (en adelante, «la App») trata la información cuando la utilizas. La App es una herramienta
-      para fabricantes de velas que permite gestionar recetas, inventario, gastos y cálculos de
-      precios. Al usar la App aceptas las prácticas descritas en este documento.
-    </p>
-
-    <h2>1. Información que tú creas dentro de la App</h2>
-    <p>
-      El contenido que generas en la App —recetas, inventario, gastos y cálculos— se almacena
-      <strong>únicamente en el almacenamiento local de tu dispositivo</strong>. Estos datos
-      <strong>no se envían a nuestros servidores</strong> ni se comparten con nosotros ni con
-      terceros. Si desinstalas la App, este contenido se elimina de tu dispositivo.
-    </p>
-    <p>
-      La App <strong>no requiere que crees una cuenta</strong> ni te solicita datos personales como
-      tu nombre, correo electrónico, número de teléfono, ubicación precisa, contactos o fotografías.
-    </p>
-
-    <h2>2. Información que se recopila automáticamente</h2>
-    <p>
-      Para mantener la App estable y mejorar su calidad, utilizamos servicios de Google Firebase que
-      recopilan de forma automática cierta información técnica y de uso:
-    </p>
-    <ul>
-      <li>
-        <strong>Firebase Crashlytics</strong> (informes de fallos): registros de errores y bloqueos,
-        información de diagnóstico, tipo y modelo del dispositivo, versión del sistema operativo,
-        versión de la App e identificadores del dispositivo o de la instalación.
-      </li>
-      <li>
-        <strong>Firebase Analytics</strong> (analítica de uso): eventos de interacción con la App,
-        número de sesiones, identificadores del dispositivo o de la instalación e información
-        aproximada de ubicación derivada de la dirección IP (a nivel de país/región).
-      </li>
-    </ul>
-    <p>
-      Esta información es <strong>anónima o seudónima</strong>: no la usamos para identificarte
-      personalmente. La utilizamos exclusivamente para detectar y corregir fallos, entender qué
-      funciones se usan y mejorar la experiencia.
-    </p>
-
-    <h2>3. Cómo usamos la información</h2>
-    <ul>
-      <li>Diagnosticar y corregir fallos y errores.</li>
-      <li>Analizar el rendimiento y la estabilidad de la App.</li>
-      <li>Comprender el uso general para priorizar mejoras.</li>
-    </ul>
-    <p>No utilizamos esta información con fines publicitarios ni la vendemos a terceros.</p>
-
-    <h2>4. Compartición de datos con terceros</h2>
-    <p>
-      Los datos técnicos y de uso descritos se procesan a través de <strong>Google (Firebase)</strong>
-      en calidad de proveedor. Google trata estos datos conforme a su propia política de privacidad,
-      disponible en
-      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.
-      No compartimos tu información con ningún otro tercero.
-    </p>
-
-    <h2>5. Conservación de los datos</h2>
-    <p>
-      Los informes de fallos de Crashlytics se conservan durante un periodo limitado (aproximadamente
-      90 días) de acuerdo con las políticas de Firebase. Los datos de analítica se conservan según la
-      configuración estándar de Firebase Analytics.
-    </p>
-
-    <h2>6. Seguridad</h2>
-    <p>
-      Aplicamos medidas razonables para proteger la información. La transmisión de los datos de
-      diagnóstico hacia los servicios de Google se realiza mediante conexiones cifradas. No obstante,
-      ningún método de transmisión o almacenamiento es 100&nbsp;% seguro.
-    </p>
-
-    <h2>7. Privacidad de los menores</h2>
-    <p>
-      La App no está dirigida a menores de 13 años y no recopilamos de forma consciente información
-      personal de menores.
-    </p>
-
-    <h2>8. Tus opciones y derechos</h2>
-    <ul>
-      <li>Puedes eliminar todo el contenido local desinstalando la App.</li>
-      <li>
-        Puedes limitar la recopilación de datos de diagnóstico a nivel del sistema desde los
-        ajustes de tu dispositivo Android (por ejemplo, opciones de uso y diagnóstico de Google).
-      </li>
-      <li>
-        Si tienes dudas sobre tus datos o deseas ejercer tus derechos, puedes contactarnos en la
-        dirección indicada más abajo.
-      </li>
-    </ul>
-
-    <h2>9. Cambios en esta política</h2>
-    <p>
-      Podemos actualizar esta Política de Privacidad ocasionalmente. Publicaremos cualquier cambio en
-      esta misma página y actualizaremos la fecha de «Última actualización».
-    </p>
-
-    <h2>10. Contacto</h2>
-    <p>
-      Si tienes preguntas sobre esta Política de Privacidad, contáctanos en:<br>
-      <strong>Correo:</strong> <a href="mailto:calculatuvela@gmail.com">calculatuvela@gmail.com</a>
-    </p>
-  </div>
-
-  <template data-en-only>
+  
     <h1>Privacy Policy</h1>
     <p class="meta">App: <strong>CalculaTuVela</strong> &middot; Last updated: July 17, 2026</p>
     <p>
@@ -280,9 +171,9 @@
       If you have questions about this Privacy Policy, contact us at:<br>
       <strong>Email:</strong> <a href="mailto:calculatuvela@gmail.com">calculatuvela@gmail.com</a>
     </p>
-  </template>
+  
 
-  <p class="doc-foot">&copy; <span id="year"></span> CalculaTuVela. <span data-es="Todos los derechos reservados." data-en="All rights reserved.">Todos los derechos reservados.</span></p>
+  <p class="doc-foot">&copy; <span id="year"></span> CalculaTuVela. <span>All rights reserved.</span></p>
 </main>
 
 </body>
