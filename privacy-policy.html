@@ -65,7 +65,7 @@
 <main class="wrap doc">
   <div data-es-only>
     <h1>Política de Privacidad</h1>
-    <p class="meta">Aplicación: <strong>CalculaTuVela</strong> &middot; Última actualización: 17 de julio de 2026</p>
+    <p class="meta">Aplicación: <strong>CalculaTuVela</strong> &middot; Última actualización: [FECHA DE PUBLICACIÓN DE 1.10.0]</p>
 
     <p>
       Esta Política de Privacidad describe cómo la aplicación móvil <strong>CalculaTuVela</strong>
@@ -85,41 +85,51 @@
       La App <strong>no requiere que crees una cuenta</strong> ni te solicita datos personales como
       tu nombre, correo electrónico, número de teléfono, ubicación precisa, contactos o fotografías.
     </p>
+    <p>
+      Si tienes activada la copia de seguridad de Android, el sistema puede guardar una copia de estos
+      datos y de las fotos de tus productos en tu cuenta de Google, para restaurarlos si cambias de
+      teléfono. Esa copia la gestiona Google y nosotros no tenemos acceso a ella. Las fotos de los
+      tickets de gastos no se incluyen en esa copia.
+    </p>
 
     <h2>2. Información que se recopila automáticamente</h2>
     <p>
-      Para mantener la App estable y mejorar su calidad, utilizamos servicios de Google Firebase que
-      recopilan de forma automática cierta información técnica y de uso:
+      Para mantener la App estable utilizamos <strong>Firebase Crashlytics</strong>, un servicio de
+      Google que, cuando la App falla, recopila de forma automática información técnica:
     </p>
     <ul>
       <li>
         <strong>Firebase Crashlytics</strong> (informes de fallos): registros de errores y bloqueos,
-        información de diagnóstico, tipo y modelo del dispositivo, versión del sistema operativo,
-        versión de la App e identificadores del dispositivo o de la instalación.
-      </li>
-      <li>
-        <strong>Firebase Analytics</strong> (analítica de uso): eventos de interacción con la App,
-        número de sesiones, identificadores del dispositivo o de la instalación e información
-        aproximada de ubicación derivada de la dirección IP (a nivel de país/región).
+        estado de la App en el momento del fallo, tipo y modelo del dispositivo, versión del sistema
+        operativo, versión de la App y un identificador aleatorio de la instalación, que sirve para
+        saber a cuántas personas afecta un mismo fallo.
       </li>
     </ul>
     <p>
-      Esta información es <strong>anónima o seudónima</strong>: no la usamos para identificarte
-      personalmente. La utilizamos exclusivamente para detectar y corregir fallos, entender qué
-      funciones se usan y mejorar la experiencia.
+      Esta información es <strong>seudónima</strong>: no incluye tu nombre ni el contenido que creas
+      en la App, y no la usamos para identificarte personalmente. La utilizamos exclusivamente para
+      detectar y corregir fallos.
+    </p>
+    <p>
+      <strong>Analítica de uso.</strong> Desde la versión 1.10.0, la App no recopila analítica de uso:
+      Firebase Analytics está desactivado y la App no accede al identificador de publicidad de tu
+      dispositivo. Las versiones anteriores enviaban a Firebase Analytics eventos de uso, número de
+      sesiones, identificadores del dispositivo o de la instalación y una ubicación aproximada (país o
+      región, derivada de la dirección IP). Al actualizar la App, ese envío se detiene. Si más adelante
+      ofrecemos analítica de uso, será opcional: te pediremos permiso dentro de la App antes de
+      recopilar nada, podrás retirarlo cuando quieras y actualizaremos esta política antes.
     </p>
 
     <h2>3. Cómo usamos la información</h2>
     <ul>
       <li>Diagnosticar y corregir fallos y errores.</li>
       <li>Analizar el rendimiento y la estabilidad de la App.</li>
-      <li>Comprender el uso general para priorizar mejoras.</li>
     </ul>
     <p>No utilizamos esta información con fines publicitarios ni la vendemos a terceros.</p>
 
     <h2>4. Compartición de datos con terceros</h2>
     <p>
-      Los datos técnicos y de uso descritos se procesan a través de <strong>Google (Firebase)</strong>
+      Los datos técnicos descritos se procesan a través de <strong>Google (Firebase)</strong>
       en calidad de proveedor. Google trata estos datos conforme a su propia política de privacidad,
       disponible en
       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.
@@ -128,9 +138,9 @@
 
     <h2>5. Conservación de los datos</h2>
     <p>
-      Los informes de fallos de Crashlytics se conservan durante un periodo limitado (aproximadamente
-      90 días) de acuerdo con las políticas de Firebase. Los datos de analítica se conservan según la
-      configuración estándar de Firebase Analytics.
+      Los informes de fallos de Crashlytics se conservan durante aproximadamente 90 días, de acuerdo
+      con las políticas de Firebase. Los datos de analítica que enviaron las versiones anteriores a la
+      1.10.0 se conservan según la configuración de retención de Firebase Analytics.
     </p>
 
     <h2>6. Seguridad</h2>
@@ -149,10 +159,6 @@
     <h2>8. Tus opciones y derechos</h2>
     <ul>
       <li>Puedes eliminar todo el contenido local desinstalando la App.</li>
-      <li>
-        Puedes limitar la recopilación de datos de diagnóstico a nivel del sistema desde los
-        ajustes de tu dispositivo Android (por ejemplo, opciones de uso y diagnóstico de Google).
-      </li>
       <li>
         Si tienes dudas sobre tus datos o deseas ejercer tus derechos, puedes contactarnos en la
         dirección indicada más abajo.
@@ -174,7 +180,7 @@
 
   <template data-en-only>
     <h1>Privacy Policy</h1>
-    <p class="meta">App: <strong>CalculaTuVela</strong> &middot; Last updated: July 17, 2026</p>
+    <p class="meta">App: <strong>CalculaTuVela</strong> &middot; Last updated: [1.10.0 PUBLICATION DATE]</p>
     <p>
       The Spanish version of this policy is the original; this English translation is provided for convenience.
     </p>
@@ -197,41 +203,49 @@
       The App <strong>does not require you to create an account</strong> and does not ask for
       personal data such as your name, email address, phone number, precise location, contacts or photos.
     </p>
+    <p>
+      If Android backup is turned on, the system may keep a copy of this data and of your product
+      photos in your Google account, to restore them if you change phones. Google manages that copy
+      and we have no access to it. Expense receipt photos are not included in it.
+    </p>
 
     <h2>2. Information collected automatically</h2>
     <p>
-      To keep the App stable and improve its quality, we use Google Firebase services that
-      automatically collect certain technical and usage information:
+      To keep the App stable we use <strong>Firebase Crashlytics</strong>, a Google service that,
+      when the App crashes, automatically collects technical information:
     </p>
     <ul>
       <li>
-        <strong>Firebase Crashlytics</strong> (crash reports): error and crash logs, diagnostic
-        information, device type and model, operating system version, App version and device or
-        installation identifiers.
-      </li>
-      <li>
-        <strong>Firebase Analytics</strong> (usage analytics): App interaction events, number of
-        sessions, device or installation identifiers and approximate location derived from the IP
-        address (at country/region level).
+        <strong>Firebase Crashlytics</strong> (crash reports): error and crash logs, the App's state
+        at the time of the crash, device type and model, operating system version, App version and a
+        random installation identifier, used to tell how many people the same crash affects.
       </li>
     </ul>
     <p>
-      This information is <strong>anonymous or pseudonymous</strong>: we do not use it to identify
-      you personally. We use it solely to detect and fix crashes, understand which features are
-      used and improve the experience.
+      This information is <strong>pseudonymous</strong>: it does not include your name or the content
+      you create in the App, and we do not use it to identify you personally. We use it solely to
+      detect and fix crashes.
+    </p>
+    <p>
+      <strong>Usage analytics.</strong> Since version 1.10.0, the App does not collect usage
+      analytics: Firebase Analytics is switched off and the App does not access your device's
+      advertising ID. Earlier versions sent Firebase Analytics usage events, the number of sessions,
+      device or installation identifiers and an approximate location (country or region, derived from
+      the IP address). Updating the App stops that. If we offer usage analytics in the future, it will
+      be optional: we will ask for your permission in the App before collecting anything, you will be
+      able to withdraw it at any time, and we will update this policy first.
     </p>
 
     <h2>3. How we use the information</h2>
     <ul>
       <li>Diagnose and fix crashes and errors.</li>
       <li>Analyze the App's performance and stability.</li>
-      <li>Understand overall usage to prioritize improvements.</li>
     </ul>
     <p>We do not use this information for advertising and we do not sell it to third parties.</p>
 
     <h2>4. Sharing data with third parties</h2>
     <p>
-      The technical and usage data described above is processed by <strong>Google (Firebase)</strong>
+      The technical data described above is processed by <strong>Google (Firebase)</strong>
       as a service provider. Google handles this data under its own privacy policy, available at
       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.
       We do not share your information with any other third party.
@@ -239,8 +253,9 @@
 
     <h2>5. Data retention</h2>
     <p>
-      Crashlytics crash reports are kept for a limited period (approximately 90 days) in line with
-      Firebase policies. Analytics data is kept according to the standard Firebase Analytics settings.
+      Crashlytics crash reports are kept for approximately 90 days, in line with Firebase policies.
+      Analytics data sent by versions before 1.10.0 is kept according to the Firebase Analytics
+      retention settings.
     </p>
 
     <h2>6. Security</h2>
@@ -259,10 +274,6 @@
     <h2>8. Your choices and rights</h2>
     <ul>
       <li>You can delete all local content by uninstalling the App.</li>
-      <li>
-        You can limit the collection of diagnostic data at the system level from your Android
-        device settings (for example, Google's usage &amp; diagnostics options).
-      </li>
       <li>
         If you have questions about your data or want to exercise your rights, you can contact us
         at the address below.
