@@ -65,7 +65,7 @@
 
   
     <h1>Privacy Policy</h1>
-    <p class="meta">App: <strong>CalculaTuVela</strong> &middot; Last updated: November 9, 2026</p>
+    <p class="meta">App: <strong>CalculaTuVela</strong> &middot; Last updated: November 15, 2026</p>
     <p>
       The Spanish version of this policy is the original; this English translation is provided for convenience.
     </p>
@@ -112,25 +112,53 @@
       detect and fix crashes.
     </p>
     <p>
-      <strong>Usage analytics.</strong> Since version 1.10.0, the App does not collect usage
-      analytics: Firebase Analytics is switched off and the App does not access your device's
-      advertising ID. Earlier versions sent Firebase Analytics usage events, the number of sessions,
-      device or installation identifiers and an approximate location (country or region, derived from
-      the IP address). Updating the App stops that. If we offer usage analytics in the future, it will
-      be optional: we will ask for your permission in the App before collecting anything, you will be
-      able to withdraw it at any time, and we will update this policy first.
+      <strong>Usage analytics (optional).</strong> Since version 1.11.0, the App asks you in
+      “My workshop” whether you want to share which parts of the App you use. <strong>Only if you
+      agree</strong> does the App send <strong>Google Analytics for Firebase</strong>:
+    </p>
+    <ul>
+      <li>which screens you open (for example recipes, calculator, inventory, expenses or My workshop);</li>
+      <li>
+        some actions, without their content: that you calculated a price (with which calculator, and
+        whether you looked at a recipe first), that you shared a calculated price, and that you saved
+        an expense (how many materials it has, in ranges, whether it has a receipt photo and whether it
+        was an edit);
+      </li>
+      <li>how many recipes, materials, expenses and photos you keep, only in ranges (0, 1-5, 6-20 or more than 20);</li>
+      <li>
+        what Google Analytics adds to every upload: a random identifier for this installation of the
+        App, when each session starts and how long it lasts, the device model, the system and App
+        versions, the language and an approximate location (country or region, derived from the IP
+        address).
+      </li>
+    </ul>
+    <p>
+      Your recipes, materials, quantities, prices, text and photos are <strong>never sent</strong>.
+      The App does not access your device's advertising ID and this data is not used for
+      advertising. If you do not agree, nothing is sent. You can change your answer at any time with
+      the “Share which parts of the app I use” switch in My workshop: turning it off stops the
+      uploads, deletes from your device anything still waiting to be sent and changes the analytics
+      identifier, so that anything you send later is not linked to what came before. What was already
+      sent is kept as described in section 5. Your answer is not copied into Android's backup: on a
+      new or restored phone you are asked again.
+    </p>
+    <p>
+      Version 1.10.0 did not collect usage analytics. Versions before 1.10.0 sent Firebase Analytics,
+      without asking, usage events, the number of sessions, device or installation identifiers and an
+      approximate location.
     </p>
 
     <h2>3. How we use the information</h2>
     <ul>
       <li>Diagnose and fix crashes and errors.</li>
       <li>Analyze the App's performance and stability.</li>
+      <li>If you agree, learn which parts of the App are used, to decide what to improve.</li>
     </ul>
     <p>We do not use this information for advertising and we do not sell it to third parties.</p>
 
     <h2>4. Sharing data with third parties</h2>
     <p>
-      The technical data described above is processed by <strong>Google (Firebase)</strong>
+      The data described above is processed by <strong>Google (Firebase)</strong>
       as a service provider. Google handles this data under its own privacy policy, available at
       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">https://policies.google.com/privacy</a>.
       We do not share your information with any other third party.
@@ -139,14 +167,14 @@
     <h2>5. Data retention</h2>
     <p>
       Crashlytics crash reports are kept for approximately 90 days, in line with Firebase policies.
-      Analytics data sent by versions before 1.10.0 is kept according to the Firebase Analytics
-      retention settings.
+      Usage analytics data (what you send if you agree, and what versions before 1.10.0 sent) is kept
+      for the retention period set in Google Analytics and deleted afterwards.
     </p>
 
     <h2>6. Security</h2>
     <p>
-      We apply reasonable measures to protect information. Diagnostic data is sent to Google's
-      services over encrypted connections. However, no method of transmission or storage is
+      We apply reasonable measures to protect information. Diagnostic and usage data is sent to
+      Google's services over encrypted connections. However, no method of transmission or storage is
       100&nbsp;% secure.
     </p>
 
@@ -159,6 +187,9 @@
     <h2>8. Your choices and rights</h2>
     <ul>
       <li>You can delete all local content by uninstalling the App.</li>
+      <li>
+        You can start or stop sharing usage analytics at any time, with the switch in My workshop.
+      </li>
       <li>
         If you have questions about your data or want to exercise your rights, you can contact us
         at the address below.
